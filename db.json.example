@@ -1,0 +1,4 @@
+{
+  "database": "protocol://db-name",
+  "create": "command to create db if needed"
+}
