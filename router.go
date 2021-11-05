@@ -15,9 +15,7 @@ func AliveHandler(c *gin.Context) {
 func ConfigureRoutes(r gin.Engine) {
 	// Index
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index", gin.H{
-			"title": "Hello",
-		})
+		c.HTML(http.StatusOK, "index.page.html", nil)
 	})
 
 	// API group
