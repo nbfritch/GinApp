@@ -15,6 +15,5 @@ func Database(d *sql.DB) gin.HandlerFunc {
 }
 
 func GetDb(c *gin.Context) *sql.DB {
-	d := c.MustGet(DB_KEY).(sql.DB)
-	return &d
+	return c.MustGet(DB_KEY).(*sql.DB)
 }
