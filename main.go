@@ -7,9 +7,13 @@ import (
 func main() {
 	db := SetupDb()
 
+	queryStore := LoadQueriesFromDisk()
+
+	dbStore := DbContext{DB: db, Queries: queryStore}
+
 	r := gin.Default()
 
-	r.Use(Database(db))
+	r.Use(RegisterDbContext(dbStore))
 
 	r.LoadHTMLGlob("templates/**/*")
 

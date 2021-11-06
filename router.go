@@ -18,6 +18,11 @@ func ConfigureRoutes(r gin.Engine) {
 		c.HTML(http.StatusOK, "index.page.html", nil)
 	})
 
+	users := r.Group("/users")
+	{
+		users.GET("/register", RegisterUserPageHandler)
+	}
+
 	// API group
 	api := r.Group("/api")
 	{
