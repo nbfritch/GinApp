@@ -14,10 +14,32 @@ type UserModel struct {
 	Locked   bool
 }
 
-func GetAllUsersJson(c *gin.Context) {
-	db := GetDb(c)
+func RegisterUserPageHandler(c *gin.Context) {
+	c.HTML(http.StatusOK, "create_user.page.html", nil)
+}
 
-	rows, err := db.Query("Select * From Users")
+func RegisterUserPostHandler(c *gin.Context) {
+	alias := c.PostForm("alias")
+	if len(alias) == 0 {
+		c.HTML(http.StatusBadRequest, "create_user.page.html", gin.H{
+			"ErrorMessage": "`Alias` is required",
+		})
+	}
+
+	fullName := c.PostForm("fullName")
+	if len(fullName) == 0 {
+		c.HTML(http.StatusBadRequest, "create_user.page.html", gin.H{
+			"ErrorMessage": "`Full Name` is required",
+		})
+	}
+
+	c.Redirect(http.StatusCreated, "")
+}
+
+func GetAllUsersJson(c *gin.Context) {
+	db := GetDbContext(c)
+
+	rows, err := db.DB.Query("Select * From Users")
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
