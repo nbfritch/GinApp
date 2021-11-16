@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -65,4 +66,28 @@ func GetAllUsersJson(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, users)
+}
+
+func GetUserByIdHandler(c *gin.Context) {
+	userIdParam := c.Param("id")
+	userId, err := strconv.Atoi(userIdParam)
+
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "error.page.html", gin.H{
+			"ErrorMessage": err.Error(),
+		})
+	}
+
+	db := GetDbContext(c)
+
+	row := db.DB.QueryRow("Select * From Users Where UserId = $1", userId)
+
+	var user UserModel
+	err = row.Scan(&user)
+
+	if err != nil {
+		c.HTML(http.StatusNotFound, "error.page.html", gin.H{
+			"ErrorMessage": "No user found",
+		})
+	}
 }

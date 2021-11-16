@@ -1,0 +1,27 @@
+{{template "default" . }}
+
+{{define "title"}}
+    {{ if .Alias }}
+        {{ .Alias }}
+    {{ else }}
+        View User
+    {{end}}
+{{end}}
+
+{{define "content"}}
+<h1>User {{ if .Alias }} {{ .Alias }} {{else}} ??? {{end}}</h1>
+<ul>
+    <li id="user-id">
+        {{ .UserId }}
+    </li>
+    <li id="full-name">
+        {{ .FullName }}
+    </li>
+    <li id="alias">
+        {{ .Alias }}
+    </li>
+    <li id="is-locked">
+        {{ if .Locked }} Locked {{else}} Not Locked {{end}}
+    </li>
+</ul>
+{{end}}

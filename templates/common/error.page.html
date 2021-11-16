@@ -1,0 +1,11 @@
+{{template "default" . }}
+
+{{define "title"}}Error{{end}}
+
+{{define "content"}}
+<h2>There was an error processing your request</h2>
+    {{if .ErrorMessage }}
+        <h3>Details</h3>
+        <p id="error-message">{{ .ErrorMessage }}</p>
+    {{end}}
+{{end}}

@@ -13,14 +13,11 @@ func AliveHandler(c *gin.Context) {
 }
 
 func ConfigureRoutes(r gin.Engine) {
-	// Index
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.page.html", nil)
-	})
-
 	users := r.Group("/users")
 	{
 		users.GET("/register", RegisterUserPageHandler)
+		users.POST("/register", RegisterUserPostHandler)
+		users.GET("/:id", GetUserByIdHandler)
 	}
 
 	// API group
@@ -29,4 +26,9 @@ func ConfigureRoutes(r gin.Engine) {
 		api.GET("/", AliveHandler)
 		api.GET("/users", GetAllUsersJson)
 	}
+
+	// Index
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.page.html", nil)
+	})
 }
